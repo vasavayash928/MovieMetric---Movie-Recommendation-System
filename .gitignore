@@ -1,0 +1,22 @@
+
+# --- Secrets ---
+Backend/.env
+config.json
+*.pem
+npm-debug.log
+
+# --- Dependencies ---
+node_modules/
+Backend/node_modules/
+ML-Service/venv/
+ML-Service/.venv/
+ML-Service/Menv/
+ML-Service/__pycache__/
+*.pyc
+
+# --- Large Files/Data ---
+*.csv
+*.pkl
+*.bin
+.DS_Store
+Thumbs.db

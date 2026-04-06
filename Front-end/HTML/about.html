@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - MovieMetric</title>
+    <link rel="stylesheet" href="/Front-end/CSS/about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
+</head>
+<body class="dark-mode">
+    <div class="main_box">
+        <div class="main-logo">
+            <a href="index.html"><i class="fa-solid fa-tachograph-digital"></i> MovieMetric</a>
+        </div>
+        <div class="profile-container">
+    <div class="profile-trigger" onclick="toggleDropdown()">
+        <i class="fa-solid fa-circle-user"></i>
+    </div>
+    
+    <div class="profile-dropdown" id="profileDropdown">
+        <div class="user-details">
+            <p class="u-name">Yash Vasava</p>
+            <p class="u-email">22it24@svitvasad.ac.in</p>
+        </div>
+        <hr>
+        <a href="settings.html"><i class="fa-solid fa-user-gear"></i> Settings</a>
+        <a href="login.html" class="logout-link"><i class="fa-solid fa-power-off"></i> Logout</a>
+    </div>
+</div>
+
+        <input type="checkbox" id="check" checked />
+        <div class="btn_one">
+            <label for="check"><i class="fa-solid fa-bars"></i></label>
+        </div>
+        <div class="sidebar_menu">
+            <div class="logo"><a href="index.html">MovieMetric</a></div>
+            <div class="btn_two">
+                <label for="check"><i class="fa-solid fa-xmark"></i></label>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="movies.html"><i class="fa-solid fa-clapperboard"></i> Movies</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About</a></li>
+                </ul>
+            </div>
+            
+        </div>
+
+        <div class="about-wrapper">
+            <div class="about-header">
+                <p>The intersection of Cinema and Artificial Intelligence</p>
+            </div>
+
+            <div class="about-stack">
+                <section class="about-card">
+                    <h3><i class="fa-solid fa-bullseye"></i> Our Mission</h3>
+                    <p>MovieMetric was born out of a simple problem: <strong>"What should we watch tonight?"</strong> We aim to eliminate decision fatigue by providing high-accuracy, personalized recommendations across Bollywood, Hollywood, and Regional Gujarati cinema.</p>
+                </section>
+
+                <section class="about-card">
+                    <h3><i class="fa-solid fa-code"></i> The Tech Stack</h3>
+                    <div class="tech-grid">
+                        <div class="tech-item"><i class="fa-brands fa-html5"></i><span>HTML</span></div>
+                        <div class="tech-item"><i class="fa-brands fa-css3"></i><span>CSS</span></div>
+                        <div class="tech-item"><i class="fa-brands fa-js"></i><span>javaScript</span></div>
+                        <div class="tech-item"><i class="fa-brands fa-node-js"></i><span>Node.js</span></div>
+                        <div class="tech-item"><i class="fa-brands fa-python"></i><span>Python ML</span></div>
+                        <div class="tech-item"><i class="fa-solid fa-microchip"></i><span>Gemini AI</span></div>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.85rem; color: var(--text-sub);">Our engine uses TF-IDF Vectorization and Cosine Similarity to analyze 50+ movie descriptors in real-time.</p>
+                </section>
+
+                <section class="about-card">
+                    <h3><i class="fa-solid fa-star"></i> Core Features</h3>
+                    <ul class="feature-list">
+                        <li><strong>Smart Recommendations:</strong> Hybrid AI scoring based on genre, mood, and ratings.</li>
+                        <li><strong>Spoiler Shield:</strong> ML-powered text analysis to keep reviews safe for everyone.</li>
+                    </ul>
+                </section>
+
+                <div class="about-footer">
+                    <p>Current Theme Preference:</p>
+                    <button class="btn btn-outline" onclick="toggleTheme()">Switch Theme <i class="fa-solid fa-circle-half-stroke"></i></button>
+                    <div class="social-links-bottom">
+                        <a href="#"><i class="fa-brands fa-github"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            document.getElementById("profileDropdown").classList.toggle("show");
+        }
+        function toggleTheme() {
+            document.body.classList.toggle("light-mode");
+            document.body.classList.toggle("dark-mode");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-trigger i')) {
+                var dropdowns = document.getElementsByClassName("profile-dropdown");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+        function toggleDropdown() {
+    document.getElementById("profileDropdown").classList.toggle("active");
+}
+
+
+window.onclick = function(event) {
+    if (!event.target.matches('.profile-trigger i')) {
+        var dropdown = document.getElementById("profileDropdown");
+        if (dropdown.classList.contains('active')) {
+            dropdown.classList.remove('active');
+        }
+    }
+}
+function toggleTheme() {
+    const root = document.documentElement; 
+    const icon = document.getElementById('themeIcon');
+    
+    if (root.classList.contains('light-mode')) {
+        
+        root.classList.remove('light-mode');
+        localStorage.setItem('theme', 'dark');
+        
+        if(icon) {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    } else {
+        
+        root.classList.add('light-mode');
+        localStorage.setItem('theme', 'light');
+        
+        if(icon) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    }
+}
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    const icon = document.getElementById('themeIcon');
+    if (localStorage.getItem('theme') === 'light' && icon) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    }
+});
+    </script>
+</body>
+</html>

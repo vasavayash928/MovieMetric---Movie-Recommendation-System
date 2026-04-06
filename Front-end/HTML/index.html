@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieMetric - Movie Recommendation System</title>
+    <link rel="stylesheet" href="/Front-end/CSS/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+        
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
+  </head>
+  <body>
+    <div class="main_box" id="page-bg">
+        <div class="main-logo">
+            <a href="index.html"><i class="fa-solid fa-tachograph-digital"></i> MovieMetric</a>
+        </div>
+        
+        <nav class="top-nav">
+            <div class="profile-container" style="display: flex; gap: 20px; align-items: center;">
+                <div class="theme-toggle" onclick="toggleTheme()" style="cursor: pointer; font-size: 24px;">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                </div>
+                <div class="profile-trigger" onclick="toggleDropdown()">
+                    <i class="fa-solid fa-circle-user"></i>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="user-info">
+                        <p class="user-name">Yash Vasava</p>
+                        <p class="user-email">22it24@svitvasad.ac.in</p>
+                    </div>
+                    <hr>
+                    <a href="/Front-end/HTML/settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+                    <a href="#" class="logout-btn"><i class="fa-solid fa-power-off"></i> Log Out</a>
+                </div>
+            </div>
+        </nav>
+
+        <input type="checkbox" id="check" checked />
+        <div class="btn_one">
+            <label for="check"><i class="fa-solid fa-bars"></i></label>
+        </div>
+
+        <div class="sidebar_menu">
+            <div class="logo"><a href="index.html">MovieMetric</a></div>
+            <div class="btn_two"><label for="check"><i class="fa-solid fa-xmark"></i></label></div>
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="movies.html"><i class="fa-solid fa-clapperboard"></i> Movies</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="home-wrapper">
+            <div class="search-section">
+                <div class="search-container">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="userMovieSearch" placeholder="Try 'Action movies'">
+                    <button onclick="redirectAndSearch()" id="searchBtn">Search</button>
+                </div>
+                
+            </div>
+
+            <div class="faq-container">
+    <div class="faq-section">
+        <div class="section-header">
+            <div class="section-title">❓ Frequently Asked <span>Questions</span></div>
+        </div>
+
+        <div class="faq-grid">
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>How does the AI recommendation work?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    MovieMetric uses <strong>TF-IDF Vectorization + Cosine Similarity</strong>. The recommendation is a hybrid score: 50% content similarity, 30% genre match, and 20% IMDb rating.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Which languages and movies are supported?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    We currently support <strong>Hindi (Bollywood)</strong>, <strong>English (Hollywood)</strong>, and <strong>Gujarati regional cinema</strong> with a database of over 900 films.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>What is the Watch Party feature?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Create a room to get a <strong>6-digit uppercase code</strong>. Share it with friends so the AI can analyze everyone's preferences for a group consensus pick.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>How does spoiler detection work?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Our Python backend uses <strong>TextBlob</strong> for sentiment analysis and scans reviews against a multi-language list of spoiler keywords to automatically blur risky content.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Where can I watch these movies?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Look for platform indicators on movie cards: <strong style="color:#ff4d4d">N</strong> (Netflix), <strong style="color:#00a8e0">P</strong> (Amazon Prime), or <strong style="color:#1f80e0">H</strong> (Disney+ Hotstar).
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Do I need to create an account?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Browsing is public, but you need a <strong>JWT-secured account</strong> to save movies to your Watchlist or submit your own analyzed reviews.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-footer">
+            <span>Still have questions?</span>
+            <button class="btn btn-outline" onclick="toggleChat()">Ask MovieBot 💬</button>
+            <a href="movies.html" class="btn btn-gold">Browse Movies →</a>
+        </div>
+    </div>
+</div>
+    </div>
+    </div>
+    <div id="chatbot-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; font-family: 'Poppins', sans-serif;">
+    <button id="chat-toggle" onclick="toggleChat()" style="width: 60px; height: 60px; border-radius: 50%; background: #ffcc00; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-size: 24px;">
+        💬
+    </button>
+
+    <div id="chat-window" style="display: none; width: 350px; height: 450px; background: #1a1a2e; border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; flex-direction: column; overflow: hidden; position: absolute; bottom: 80px; right: 0; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <div style="background: #16213e; padding: 15px; color: white; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between;">
+            <span>🎬 MovieMetric Bot</span>
+            <button onclick="toggleChat()" style="background: none; border: none; color: white; cursor: pointer;">✕</button>
+        </div>
+        
+        <div id="chat-messages" style="flex: 1; padding: 15px; overflow-y: auto; color: white; display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 10px; align-self: flex-start; max-width: 80%; font-size: 0.9rem;">
+                Hi! I'm your MovieMetric assistant. Ask me about your questions?
+            </div>
+        </div>
+
+        <div style="padding: 15px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px;">
+            <input type="text" id="chat-input" placeholder="Ask something..." style="flex: 1; background: #0f3460; border: none; padding: 10px; border-radius: 5px; color: white; outline: none;">
+            <button onclick="sendChatMessage()" style="background: #ffcc00; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Send</button>
+        </div>
+    </div>
+</div>
+    <script src="/Front-end/JS/api.js"></script>
+    <script src="/Front-end/JS/movies.js"></script> 
+    <script src="/Front-end/JS/recommender.js"></script>
+    <script src="/Front-end/JS/chat.js"></script>
+        <script>
+        window.addEventListener("scroll", () => {
+            const logo = document.querySelector(".main-logo");
+            if (window.scrollY > 50) {
+                logo.style.transform = "translateX(-50%) translateY(-100px)";
+                logo.style.opacity = "0";
+                logo.style.pointerEvents = "none";
+            } else {
+                logo.style.transform = "translateX(-50%) translateY(0)";
+                logo.style.opacity = "1";
+                logo.style.pointerEvents = "auto";
+            }
+        });
+
+        
+        function toggleFaq(element) {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            
+            faqItems.forEach(item => {
+                if (item !== element) item.classList.remove('active');
+            });
+            
+            
+            element.classList.toggle('active');
+        }
+
+        
+        function toggleTheme() {
+            const root = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (root.classList.contains('light-mode')) {
+                root.classList.remove('light-mode');
+                localStorage.setItem('theme', 'dark');
+                if(icon) { icon.classList.replace('fa-sun', 'fa-moon'); }
+            } else {
+                root.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
+                if(icon) { icon.classList.replace('fa-moon', 'fa-sun'); }
+            }
+        }
+
+        
+        function toggleDropdown() {
+            document.getElementById("profileDropdown").classList.toggle("show");
+        }
+        
+        function toggleChat() {
+    const chatWin = document.getElementById('chat-window');
+    
+    
+    if (chatWin.style.display === 'none' || chatWin.style.display === '') {
+        chatWin.style.display = 'flex'; 
+        console.log("Chat window opened");
+    } else {
+        chatWin.style.display = 'none'; 
+        console.log("Chat window closed");
+        
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.getElementById('chat-window').style.display = 'none';
+    }
+});
+    }
+}
+
+        window.onclick = function(e) {
+            if (!e.target.matches('.profile-trigger i') && !e.target.matches('.profile-trigger')) {
+                var dd = document.getElementById("profileDropdown");
+                if (dd && dd.classList.contains('show')) dd.classList.remove('show');
+            }
+        }
+        function redirectAndSearch() {
+        const searchVal = document.getElementById('userMovieSearch').value.trim();
+        
+        
+        if (searchVal) {
+            
+            window.location.href = `/Front-end/HTML/movies.html?search=${encodeURIComponent(searchVal)}`;
+        } else {
+            
+            window.location.href = `/Front-end/HTML/movies.html`;
+        }
+    }
+
+    
+    document.getElementById('userMovieSearch')?.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            redirectAndSearch();
+        }
+    });
+    </script>
+    
+</body>
+</html>

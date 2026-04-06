@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browse Movies - MovieMetric</title>
+    <link rel="stylesheet" href="/Front-end/CSS/movies.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <style>
+    body, html {
+        background-color: #0f172a !important; 
+        color: white;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
+    .main_box, #page-bg {
+        min-height: 100vh;
+        height: auto;
+        background-color: #0f172a !important;
+        overflow-y: auto; 
+    }
+
+    .home-wrapper {
+        margin-left: 300px;
+        min-height: 100vh;
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    #check:not(:checked) ~ .home-wrapper {
+        margin-left: 0;
+    }
+
+    .modal-overlay {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .modal-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .home-wrapper {
+        margin-left: 300px; 
+        min-height: 100vh;
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+    #check:not(:checked) ~ .home-wrapper {
+        margin-left: 0;
+    }
+    
+    .modal-overlay {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .modal-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    </style>
+
+    <script>
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
+</head>
+<body>
+    <div class="main_box">
+
+    <div class="profile-container">
+        <div class="theme-toggle" onclick="toggleTheme()" style="cursor: pointer; font-size: 24px; color: white; display: inline-block; margin-right: 15px;">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </div>
+        <div class="profile-trigger" onclick="toggleDropdown()" style="display: inline-block;">
+            <i class="fa-solid fa-circle-user"></i>
+        </div>
+        
+        <div class="profile-dropdown" id="profileDropdown">
+            <div class="user-details">
+                <p class="u-name">Yash Vasava</p>
+                <p class="u-email">22it24@svitvasad.ac.in</p>
+            </div>
+            <hr>
+            <a href="settings.html"><i class="fa-solid fa-user-gear"></i> Settings</a>
+            <a href="login.html" class="logout-link"><i class="fa-solid fa-power-off"></i> Logout</a>
+        </div>
+    </div>
+    
+    <input type="checkbox" id="check" checked />
+    <div class="btn_one">
+        <label for="check"><i class="fa-solid fa-bars"></i></label>
+    </div>
+
+    <div class="sidebar_menu">
+        <div class="logo"><a href="/Front-end/HTML/index.html">MovieMetric</a></div>
+        <div class="btn_two"><label for="check"><i class="fa-solid fa-xmark"></i></label></div>
+        <div class="menu">
+        <ul>
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="/Front-end/HTML/movies.html"><i class="fa-solid fa-clapperboard"></i> Movies</a></li>
+            <li><a href="/Front-end/HTML/about.html"><i class="fa-regular fa-circle-question"></i> About</a></li>
+        </ul>
+        </div>
+    </div> <div class="home-wrapper">
+        <div class="catalog-header" style="padding-top: 80px; padding-left: 20px;">
+            <h2 style="color: white; font-size: 2rem; text-align:center;">Browse <span style="color: #ffcc00;">Movies</span></h2>
+            
+            <div class="filter-bar" style="display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap;">
+                <div class="search-container small-search" style="display: flex; align-items: center; background: rgba(255,255,255,0.05); padding: 15px 15px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2);">
+                    <i class="fa-solid fa-magnifying-glass search-icon" style="color: #cbd5e1; margin-right: 10px;"></i>
+                    <input type="text" id="catalogSearch" placeholder="Search movies..." onkeyup="handleSearch(event)" style="background: transparent; border: none; color: white; outline: none; padding: 10px; width: 250px;">
+                    <button id="searchBtn" onclick="fetchMovies()" style="background: white; color: black; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold;">Search</button>
+                </div>
+                
+                <select id="genreFilter" onchange="fetchMovies()" style="background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 15px; border-radius: 8px; outline: none; cursor: pointer;">
+                    <option value="" style="color: white; background-color:#0f172a;">All Genres</option>
+                    <option value="Action" style="color:white; background-color:#0f172a;">Action</option>
+                    <option value="Drama" style="color: white; background-color:#0f172a;">Drama</option>
+                    <option value="Sci-Fi" style="color: white; background-color:#0f172a;">Sci-Fi</option>
+                    <option value="Comedy" style="color: white; background-color:#0f172a;">Comedy</option>
+                    <option value="Biography" style="color: white; background-color:#0f172a;">Biography</option>
+                    <option value="Crime" style="color: white; background-color:#0f172a;">Crime</option>
+                    <option value="Thriller" style="color: white; background-color:#0f172a;">Thriller</option>
+                    <option value="Animation" style="color: white; background-color:#0f172a;">Animation</option>
+                    <option value="Mystery" style="color: white; background-color:#0f172a;">Mystery</option>
+                    <option value="Fantasy" style="color: white; background-color:#0f172a;">Fantasy</option>
+                    <option value="War" style="color: white; background-color:#0f172a;">War</option>
+                    <option value="Romance" style="color: white; background-color:#0f172a;">Romance</option>
+                    <option value="Sports" style="color: white; background-color:#0f172a;">Sports</option>
+                </select>
+
+                <select id="moodFilter" onchange="fetchMovies()" style="background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 15px; border-radius: 8px; outline: none; cursor: pointer;">
+                    <option value="" style="color: white; background-color:#0f172a;">All Moods</option>
+                    <option value="intense" style="color: white; background-color:#0f172a;">Intense</option>
+                    <option value="inspired" style="color: white; background-color:#0f172a;">Inspired</option>
+                    <option value="happy" style="color: white; background-color:#0f172a;">Happy</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="movieResultsGrid" class="results-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 40px; padding: 0 20px;">
+            </div>
+    </div>
+
+    <div id="movieModal" class="modal-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 3000;">
+        <div class="modal-content" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 90%; max-width: 600px; padding: 30px; position: relative;">
+            <span class="close-modal" onclick="closeModal()" style="position: absolute; top: 20px; right: 20px; font-size: 1.8rem; color: white; cursor: pointer;">&times;</span>
+            
+            <div class="modal-header" style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;">
+                
+                <div class="modal-titles">
+                    <h2 id="modalTitle" style="color: white; margin-bottom: 5px;">Title</h2>
+                    <p id="modalSub" style="color: #cbd5e1;"><span id="modalYear">2024</span> • <span id="modalLang">English</span> • ⭐ <span id="modalRating">8.5</span></p>
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                <div class="tags" id="modalTags" style="display: flex; flex-wrap: wrap; margin-bottom: 20px;"></div>
+                <h3 style="color: white; margin-bottom: 10px;">Description</h3>
+                <p id="modalDesc" style="color: #cbd5e1; margin-bottom: 20px; line-height: 1.6;">Description goes here...</p>
+                
+                <div class="modal-actions" style="display: flex; gap: 15px;">
+                    <button class="btn-gold" onclick="triggerAIRecommender()" style="flex: 1; padding: 12px; border-radius: 8px; background: #ffcc00; color: black; border: none; cursor: pointer; font-weight: bold; font-size: 1rem;">
+                        <i class="fa-solid fa-brain"></i> Find Similar (AI)
+                    </button>
+                </div>
+                <div class="review-section" style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+    <h3 style="color: white; margin-bottom: 10px;">User Review Analysis</h3>
+    <textarea id="userReviewText" placeholder="Write your thoughts about the movie..." 
+              style="width: 100%; height: 80px; background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 10px; outline: none; margin-bottom: 10px;"></textarea>
+    
+    <button type="button" onclick="analyzeSentiment()" style="width: 100%; padding: 12px; border-radius: 8px; background: #3b82f6; color: white; border: none; cursor: pointer; font-weight: bold; margin-bottom: 15px;" >
+        <i class="fa-solid fa-microchip"></i> Analyze with Naive Bayes
+    </button>
+
+    <div id="sentimentResult" style="display: none; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold;">
+        <span id="sentimentLabel"></span> 
+        <small id="sentimentConfidence" style="display: block; font-weight: normal; margin-top: 5px; opacity: 0.8;"></small>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    </div> <script src="/Front-end/JS/api.js"></script>
+    <script src="/Front-end/JS/movies.js"></script> 
+    <script src="/Front-end/JS/recommender.js"></script> 
+    <script src="/Front-end/JS/review.js"></script> 
+    <script src="/Front-end/JS/chat.js"></script>
+    
+    <script>
+    function toggleDropdown() {
+        document.getElementById("profileDropdown").classList.toggle("active");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.profile-trigger i')) {
+            var dropdown = document.getElementById("profileDropdown");
+            if (dropdown && dropdown.classList.contains('active')) {
+                dropdown.classList.remove('active');
+            }
+        }
+    }
+
+    function toggleTheme() {
+        const root = document.documentElement; 
+        const icon = document.getElementById('themeIcon');
+        
+        if (root.classList.contains('light-mode')) {
+            root.classList.remove('light-mode');
+            localStorage.setItem('theme', 'dark');
+            if(icon) { icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); }
+        } else {
+            root.classList.add('light-mode');
+            localStorage.setItem('theme', 'light');
+            if(icon) { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); }
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const icon = document.getElementById('themeIcon');
+        if (localStorage.getItem('theme') === 'light' && icon) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    });
+    </script>
+</body>
+</html>
